@@ -1,0 +1,236 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   Blueprint Cobalt — raw design tokens
+   Light defaults. .dark overrides below.
+   These are the source of truth; shadcn semantic tokens map to them.
+─────────────────────────────────────────────────────────────────────────────── */
+:root {
+  /* Surfaces (cool blue-white scale) */
+  --canvas:         oklch(98.5% 0.006 245);
+  --canvas-2:       oklch(96.2% 0.01 245);
+  --surface:        #ffffff;
+  --surface-raised: oklch(99% 0.003 245);
+  --surface-sunk:   oklch(97% 0.008 245);
+
+  /* Ink scale (deep navy → subtle) */
+  --ink:        oklch(15% 0.022 248);
+  --ink-2:      oklch(30% 0.02 248);
+  --ink-muted:  oklch(50% 0.015 242);
+  --ink-subtle: oklch(65% 0.01 242);
+
+  /* Borders */
+  --border-soft:   oklch(90% 0.016 242);
+  --border-strong: oklch(81% 0.02 242);
+
+  /* Brand — Blueprint Cobalt */
+  --brand:        #1d4ed8;
+  --brand-hover:  color-mix(in oklch, var(--brand) 88%, black);
+  --brand-tint:   color-mix(in oklch, var(--brand) 10%, var(--canvas));
+  --brand-tint-2: color-mix(in oklch, var(--brand) 18%, var(--canvas));
+
+  /* Status colors (semantic) */
+  --st-pending:    oklch(62% 0.14 75);
+  --st-pending-bg: oklch(96% 0.05 78);
+  --st-replied:    oklch(50% 0.14 150);
+  --st-replied-bg: oklch(95% 0.06 150);
+  --st-awarded:    var(--brand);
+  --st-awarded-bg: var(--brand-tint);
+  --st-overdue:    oklch(52% 0.19 25);
+  --st-overdue-bg: oklch(96% 0.07 25);
+  --st-draft:      var(--ink-muted);
+  --st-draft-bg:   var(--canvas-2);
+  --st-declined:   var(--ink-muted);
+  --st-declined-bg:var(--canvas-2);
+
+  /* Focus ring (a11y) */
+  --ring-offset: var(--surface);
+
+  /* shadcn semantic tokens — map to brand palette
+     NB: shadcn `--accent` is a subtle hover bg, not the brand color.
+     The brand color is `--primary`. */
+  --background:            var(--canvas);
+  --foreground:            var(--ink);
+  --card:                  var(--surface);
+  --card-foreground:       var(--ink);
+  --popover:               var(--surface);
+  --popover-foreground:    var(--ink);
+  --primary:               var(--brand);
+  --primary-foreground:    #ffffff;
+  --secondary:             var(--brand-tint-2);
+  --secondary-foreground:  var(--brand);
+  --muted:                 var(--canvas-2);
+  --muted-foreground:      var(--ink-muted);
+  --accent:                var(--canvas-2);
+  --accent-foreground:     var(--ink);
+  --destructive:           var(--st-overdue);
+  --destructive-foreground:#ffffff;
+  --border:                var(--border-soft);
+  --input:                 var(--border-strong);
+  --ring:                  var(--brand);
+}
+
+/* Dark mode — cool navy-tinted */
+.dark {
+  --canvas:         oklch(14% 0.02 248);
+  --canvas-2:       oklch(18% 0.022 248);
+  --surface:        oklch(19% 0.022 248);
+  --surface-raised: oklch(22% 0.02 248);
+  --surface-sunk:   oklch(13% 0.018 248);
+
+  --ink:        oklch(95% 0.005 240);
+  --ink-2:      oklch(80% 0.008 242);
+  --ink-muted:  oklch(60% 0.01 242);
+  --ink-subtle: oklch(46% 0.01 242);
+
+  --border-soft:   oklch(27% 0.018 248);
+  --border-strong: oklch(35% 0.018 248);
+
+  --brand-tint:   color-mix(in oklch, var(--brand) 18%, var(--canvas));
+  --brand-tint-2: color-mix(in oklch, var(--brand) 28%, var(--canvas));
+
+  --secondary-foreground: var(--ink);
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   Tailwind theme wiring — exposes tokens as utilities
+   bg-primary, text-ink-muted, rounded-md, font-mono, etc.
+─────────────────────────────────────────────────────────────────────────────── */
+@theme inline {
+  /* shadcn semantic colors */
+  --color-background:           var(--background);
+  --color-foreground:           var(--foreground);
+  --color-card:                 var(--card);
+  --color-card-foreground:      var(--card-foreground);
+  --color-popover:              var(--popover);
+  --color-popover-foreground:   var(--popover-foreground);
+  --color-primary:              var(--primary);
+  --color-primary-foreground:   var(--primary-foreground);
+  --color-secondary:            var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted:                var(--muted);
+  --color-muted-foreground:     var(--muted-foreground);
+  --color-accent:               var(--accent);
+  --color-accent-foreground:    var(--accent-foreground);
+  --color-destructive:          var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border:               var(--border);
+  --color-input:                var(--input);
+  --color-ring:                 var(--ring);
+
+  /* Brand surface scale */
+  --color-canvas:         var(--canvas);
+  --color-canvas-2:       var(--canvas-2);
+  --color-surface:        var(--surface);
+  --color-surface-raised: var(--surface-raised);
+  --color-surface-sunk:   var(--surface-sunk);
+
+  /* Brand ink scale */
+  --color-ink:        var(--ink);
+  --color-ink-2:      var(--ink-2);
+  --color-ink-muted:  var(--ink-muted);
+  --color-ink-subtle: var(--ink-subtle);
+
+  /* Brand strokes */
+  --color-border-soft:   var(--border-soft);
+  --color-border-strong: var(--border-strong);
+
+  /* Brand */
+  --color-brand:        var(--brand);
+  --color-brand-hover:  var(--brand-hover);
+  --color-brand-tint:   var(--brand-tint);
+  --color-brand-tint-2: var(--brand-tint-2);
+
+  /* Status — fg + bg pairs */
+  --color-status-pending:    var(--st-pending);
+  --color-status-pending-bg: var(--st-pending-bg);
+  --color-status-replied:    var(--st-replied);
+  --color-status-replied-bg: var(--st-replied-bg);
+  --color-status-awarded:    var(--st-awarded);
+  --color-status-awarded-bg: var(--st-awarded-bg);
+  --color-status-overdue:    var(--st-overdue);
+  --color-status-overdue-bg: var(--st-overdue-bg);
+  --color-status-draft:      var(--st-draft);
+  --color-status-draft-bg:   var(--st-draft-bg);
+  --color-status-declined:   var(--st-declined);
+  --color-status-declined-bg: var(--st-declined-bg);
+
+  /* Radii */
+  --radius-xs: 4px;
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 14px;
+  --radius-xl: 20px;
+
+  /* Fonts (variables come from next/font in layout.tsx) */
+  --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-geist-mono), ui-monospace, monospace;
+
+  /* Motion */
+  --animate-duration-1: 80ms;
+  --animate-duration-2: 160ms;
+  --animate-duration-3: 260ms;
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   Base layer — global resets & body
+─────────────────────────────────────────────────────────────────────────────── */
+@layer base {
+  * {
+    border-color: var(--border);
+  }
+
+  html {
+    text-size-adjust: 100%;
+  }
+
+  body {
+    background-color: var(--background);
+    color: var(--foreground);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    font-feature-settings: "rlig" 1, "calt" 1;
+  }
+
+  ::selection {
+    background-color: color-mix(in oklch, var(--brand) 22%, transparent);
+  }
+
+  /* Tabular numerals everywhere — prices, dates, IDs read better */
+  .font-mono,
+  code,
+  kbd,
+  pre,
+  samp {
+    font-variant-numeric: tabular-nums;
+  }
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   Input group — addon/input radii collapse on adjacent edges.
+   Used by <InputGroup>; relies on :has() (90%+ browser support).
+─────────────────────────────────────────────────────────────────────────────── */
+@layer components {
+  .input-group > [data-slot="input"] {
+    flex: 1 1 0%;
+    min-width: 0;
+  }
+  .input-group:has(> [data-slot="input-addon"]:first-child) > [data-slot="input"] {
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+    border-left-width: 0;
+  }
+  .input-group:has(> [data-slot="input-addon"]:last-child) > [data-slot="input"] {
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+    border-right-width: 0;
+  }
+  /* Make addons feel like part of the input on focus */
+  .input-group:focus-within > [data-slot="input-addon"] {
+    border-color: var(--ring);
+  }
+}
