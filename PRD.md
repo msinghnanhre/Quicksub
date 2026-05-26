@@ -1635,3 +1635,31 @@ Do not start Phase 2 without Phase 1 complete.
 Do not start Phase 3 without AI service tested end-to-end with real construction descriptions.
 Do not start Phase 5 without at least one full end-to-end test with a real RFQ sent and replied to.
 ```
+
+-----
+
+## 13. Design Context — SubRFQ
+
+**Personality:** Practical and professional. Built for trade contractors who don’t want to think about software — they want to get the job done and move on. Not startup-cute. Not enterprise-sterile. Think well-designed job site app — dense where it needs to be, clear, no decorative fluff.
+
+**Users:** Sub owners and estimators on desktop/laptop for the buyer flow. The supplier reply page is mobile-first — a scaffolding company owner opening an email on their iPhone between jobs.
+
+**Component library:** shadcn/ui with Tailwind. Use the default component variants unless there’s a strong reason not to. Don’t invent custom components for things shadcn already handles.
+
+**Color direction:** Neutral base (slate or zinc gray scale). Single accent — dark teal (#0d7a6b range) for primary actions. Red for destructive, green for success states. No gradients. No decorative illustration.
+
+**Typography:** Inter or system font. No display fonts. Labels and data are more important than headings.
+
+**Density:** Medium-dense. These users read job specs and quotes — they’re not afraid of information on screen. Don’t space things out to look “clean” if it means more scrolling.
+
+**Navigation (desktop):** Left sidebar, narrow (64px icon-only or 200px expanded). Items: Dashboard, Jobs, Address Book, Settings. User avatar + subscription badge at bottom.
+
+**Navigation (mobile):** Bottom nav for dashboard routes. Not relevant for the supplier reply page which has no nav.
+
+Prototype these three screens first, in this order:
+
+1. **Supplier reply page (`/reply/[token]`)** — highest stakes, public-facing, mobile-first, zero-chrome. No sidebar, no nav. Just the RFQ summary and the quote form. If this screen is confusing or slow a supplier won’t reply and the whole product fails.
+2. **Comparison view (`/jobs/[id]/compare`)** — the most complex layout in the product. Horizontal scroll table on mobile, sticky left column with row labels, columns per supplier. Get this working as a prototype before building it — the data structure is easy, the layout is where it breaks.
+3. **Job creation Step 1 (`/jobs/new`)** — first real impression for the buyer. Form-heavy, needs good empty state for the description textarea, file upload drag-zone, and deadline picker.
+
+The rest of the screens (dashboard, job detail, confirmation) are straightforward once you have the design language established from these three.
